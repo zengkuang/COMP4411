@@ -258,9 +258,24 @@ void ImpressionistUI::cb_brushChoice(Fl_Widget* o, void* v)
 	{
 		pUI->m_LineWidthSlider->activate();
 		pUI->m_LineAngleSlider->activate();
+		pUI->m_DirectionChoice->activate();
 	}
 
 	pDoc->setBrushType(type);
+}
+
+//-------------------------------------------------------------
+// Sets the type of direction controler to use to the one chosen in the stroke direction
+// choice.  
+// Called by the UI when a stroke direction is chosen in the direction controler choice
+//-------------------------------------------------------------
+void ImpressionistUI::cb_directionChoice(Fl_Widget* o, void* v)
+{
+	ImpressionistUI* pUI = ((ImpressionistUI *)(o->user_data()));
+	ImpressionistDoc* pDoc = pUI->getDocument();
+
+	int type = (int)v;
+	pDoc->setStrokeDirectionType(type);
 }
 
 //------------------------------------------------------------
@@ -387,7 +402,11 @@ int ImpressionistUI::getAlpha()
 //------------------------------------------------
 void ImpressionistUI::setAlpha(float alpha)
 {
-
+	m_nAlpha = alpha;
+	if (alpha <= 1.0)
+	{
+		m_AlphaSlider->value(m_nAlpha);
+	}
 }
 
 //------------------------------------------------
@@ -403,7 +422,11 @@ int ImpressionistUI::getLineWidth()
 //------------------------------------------------
 void ImpressionistUI::setLineWidth(int width)
 {
-
+	m_nLineWidth = width;
+	if (width <= 40)
+	{
+		m_LineWidthSlider->value(m_nLineWidth);
+	}
 }
 
 //------------------------------------------------
@@ -419,7 +442,11 @@ int ImpressionistUI::getLineAngle()
 //------------------------------------------------
 void ImpressionistUI::setLineAngle(int angle)
 {
-
+	m_nLineAngle = angle;
+	if (angle <= 359)
+	{
+		m_LineAngleSlider->value(m_nLineAngle);
+	}
 }
 
 // Main menu definition
@@ -503,6 +530,7 @@ ImpressionistUI::ImpressionistUI() {
 	m_DirectionChoice->user_data((void*)(this));
 	m_DirectionChoice->menu(directionControlerMenu);
 	m_DirectionChoice->callback(cb_directionChoice);
+	m_DirectionChoice->deactivate();
 
 
 	// Add brush size slider to the dialog 

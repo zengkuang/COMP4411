@@ -22,14 +22,6 @@
 
 #include "ImpBrush.h"
 
-enum
-{
-	SLIDER_RIGHT_MOUSE = 0,
-	GRADIENT,
-	BRUSH_DIRECTION,
-	NUM_DIRECTION_CONTROL	// Make sure this stay at end
-};
-
 class ImpressionistUI {
 public:
 	ImpressionistUI();

@@ -31,6 +31,7 @@ void LineBrush::BrushMove(const Point source, const Point target)
 	int size = pDoc->getSize();
 	int Line_width = pDoc->getLineWidth();
 	int Line_angle = pDoc->getLineAngle();
+	int Stroke_direction = pDoc->m_pCurrentStrokeDirection;
 
 	if (pDoc == NULL)
 	{
@@ -39,9 +40,21 @@ void LineBrush::BrushMove(const Point source, const Point target)
 	}
 
 	glLineWidth((int)Line_width);
-	
+
+	switch (direction) {
+		case SLIDER_RIGHT_MOUSE:
+			
+			break;
+		case GRADIENT:
+
+			break;
+		case BRUSH_DIRECTION:
+
+			break;
+	}
+
 	glBegin(GL_LINES);
-	
+
 		SetColor(source);
 		glVertex2d(target.x - size * cos(Line_angle*M_PI / 180) / 2, target.y - size * sin(Line_angle*M_PI / 180) / 2);
 		glVertex2d(target.x + size * cos(Line_angle*M_PI / 180) / 2, target.y + size * sin(Line_angle*M_PI / 180) / 2);

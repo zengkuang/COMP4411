@@ -15,6 +15,10 @@
 // Include individual brush headers here.
 #include "PointBrush.h"
 #include "LineBrush.h"
+#include "CircleBrush.h"
+#include "ScatteredPointBrush.h"
+#include "ScatteredLineBrush.h"
+#include "ScatteredCircleBrush.h"
 
 
 #define DESTROY(p)	{  if ((p)!=NULL) {delete [] p; p=NULL; } }
@@ -76,6 +80,15 @@ char* ImpressionistDoc::getImageName()
 void ImpressionistDoc::setBrushType(int type)
 {
 	m_pCurrentBrush = ImpBrush::c_pBrushes[type];
+}
+
+//---------------------------------------------------------
+// Called by the UI when the user changes the stroke direction type.
+// type: one of the defined stroke direction types.
+//---------------------------------------------------------
+void ImpressionistDoc::setStrokeDirectionType(int type)
+{
+	m_pCurrentStrokeDirection = type;
 }
 
 //---------------------------------------------------------
