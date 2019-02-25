@@ -22,6 +22,14 @@
 
 #include "ImpBrush.h"
 
+enum
+{
+	SLIDER_RIGHT_MOUSE = 0,
+	GRADIENT,
+	BRUSH_DIRECTION,
+	NUM_DIRECTION_CONTROL	// Make sure this stay at end
+};
+
 class ImpressionistUI {
 public:
 	ImpressionistUI();
@@ -29,16 +37,20 @@ public:
 	// The FLTK widgets
 	Fl_Window*			m_mainWindow;
 	Fl_Menu_Bar*		m_menubar;
-								
+
 	PaintView*			m_paintView;
 	OriginalView*		m_origView;
 
-// for brush dialog
+	// for brush dialog
 	Fl_Window*			m_brushDialog;
 	Fl_Choice*			m_BrushTypeChoice;
+	Fl_Choice*			m_DirectionChoice;	//new
 
 	Fl_Slider*			m_BrushSizeSlider;
 	Fl_Button*          m_ClearCanvasButton;
+	Fl_Slider*			m_LineWidthSlider;
+	Fl_Slider*			m_LineAngleSlider;
+	Fl_Slider*			m_AlphaSlider;
 
 	// Member functions
 	void				setDocument(ImpressionistDoc* doc);
@@ -52,15 +64,29 @@ public:
 	int					getSize();
 	void				setSize(int size);
 
-private:
-	ImpressionistDoc*	m_pDoc;		// pointer to document to communicate with the document
+	int					getAlpha();
+	void				setAlpha(float alpha);
 
-	// All attributes here
+	// Attribute of line brush
+
+	int					getLineWidth();
+	void				setLineWidth(int width);
+
+	int					getLineAngle();
+	void				setLineAngle(int angle);
+private:
+	ImpressionistDoc * m_pDoc;		// pointer to document to communicate with the document
+
+									// All attributes here
 	int		m_nSize;
+	int		m_nAlpha;
+	int		m_nLineWidth;
+	int		m_nLineAngle;
 
 	// Static class members
 	static Fl_Menu_Item		menuitems[];
-	static Fl_Menu_Item		brushTypeMenu[NUM_BRUSH_TYPE+1];
+	static Fl_Menu_Item		brushTypeMenu[NUM_BRUSH_TYPE + 1];
+	static Fl_Menu_Item		directionControlerMenu[NUM_DIRECTION_CONTROL + 1];
 
 	static ImpressionistUI*	whoami(Fl_Menu_* o);
 
@@ -73,8 +99,12 @@ private:
 	static void	cb_exit(Fl_Menu_* o, void* v);
 	static void	cb_about(Fl_Menu_* o, void* v);
 	static void	cb_brushChoice(Fl_Widget* o, void* v);
+	static void cb_directionChoice(Fl_Widget* o, void* v);	//new
 	static void	cb_clear_canvas_button(Fl_Widget* o, void* v);
 	static void	cb_sizeSlides(Fl_Widget* o, void* v);
+	static void cb_alphaSlides(Fl_Widget* o, void* v);
+	static void cb_linewidthSlides(Fl_Widget*o, void *v);
+	static void cb_lineangleSlides(Fl_Widget* o, void*v);
 
 };
 
