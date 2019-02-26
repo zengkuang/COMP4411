@@ -59,6 +59,9 @@ public:
 	ImpressionistUI*	m_pUI;
 
 	// Operations
+
+	Point** pointer_history;
+
 public:
 	// Get the color of the original picture at the specified coord
 	GLubyte * GetOriginalPixel(int x, int y);

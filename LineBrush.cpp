@@ -33,6 +33,7 @@ void LineBrush::BrushMove(const Point source, const Point target)
 	int Line_angle = pDoc->getLineAngle();
 	int Stroke_direction = pDoc->m_pCurrentStrokeDirection;
 
+
 	if (pDoc == NULL)
 	{
 		printf("LineBrush::BrushMove document is NULL\n");
@@ -41,15 +42,16 @@ void LineBrush::BrushMove(const Point source, const Point target)
 
 	glLineWidth((int)Line_width);
 
-	switch (direction) {
+	switch (Stroke_direction) {
 		case SLIDER_RIGHT_MOUSE:
 			
 			break;
 		case GRADIENT:
-
+			int* grad = Gradient(source);
+			Line_angle = atan2(grad[0], grad[1]);
 			break;
 		case BRUSH_DIRECTION:
-
+			Line_angle = atan2((pDoc->pointer_history[0]->x - pDoc->pointer_history[1]->x), (pDoc->pointer_history[0]->y - pDoc->pointer_history[1]->y));
 			break;
 	}
 

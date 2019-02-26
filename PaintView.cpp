@@ -164,8 +164,11 @@ int PaintView::handle(int event)
 		coord.y = Fl::event_y();
 		if (Fl::event_button()>1)
 			eventToDo=RIGHT_MOUSE_DRAG;
-		else
-			eventToDo=LEFT_MOUSE_DRAG;
+		else {
+			eventToDo = LEFT_MOUSE_DRAG;
+			m_pDoc->pointer_history[1] = m_pDoc->pointer_history[0];
+			m_pDoc->pointer_history[0] = new Point(coord.x, coord.y);
+		}
 		isAnEvent=1;
 		redraw();
 		break;
