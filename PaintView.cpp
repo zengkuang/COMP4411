@@ -169,6 +169,7 @@ int PaintView::handle(int event)
 			m_pDoc->pointer_history[1] = m_pDoc->pointer_history[0];
 			m_pDoc->pointer_history[0] = new Point(coord.x, coord.y);
 		}
+		m_pDoc->m_pUI->m_origView->setMarker(coord);
 		isAnEvent=1;
 		redraw();
 		break;
@@ -185,6 +186,8 @@ int PaintView::handle(int event)
 	case FL_MOVE:
 		coord.x = Fl::event_x();
 		coord.y = Fl::event_y();
+		m_pDoc->m_pUI->m_origView->setMarker(coord);
+		redraw();
 		break;
 	default:
 		return 0;

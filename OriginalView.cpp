@@ -74,6 +74,7 @@ void OriginalView::draw()
 		glPixelStorei( GL_UNPACK_ROW_LENGTH, m_pDoc->m_nWidth );
 		glDrawBuffer( GL_BACK );
 		glDrawPixels( drawWidth, drawHeight, GL_RGB, GL_UNSIGNED_BYTE, bitstart );
+		drawMarker();
 
 	}
 			
@@ -91,3 +92,21 @@ void OriginalView::resizeWindow(int	width,
 	resize(x(), y(), width, height);
 }
 
+void OriginalView::setMarker(const Point Marker)
+{
+	this->Marker = Marker;
+	redraw();
+}
+
+void OriginalView::drawMarker()
+{
+	double original_y = Marker.y - m_nWindowHeight / 2;
+
+	glPointSize((float)MarkerSize);
+	glBegin(GL_POINTS);
+
+		glColor3ub(255, 0, 0);
+		glVertex2d(Marker.x, original_y);
+
+	glEnd();
+}

@@ -30,12 +30,17 @@ public:
 
 	void resizeWindow(int width, int height);
 
+	void setMarker(const Point Marker);
+	void drawMarker();
+
 	ImpressionistDoc*	m_pDoc;
 
 private:
 	int	m_nWindowWidth, 
 		m_nWindowHeight;
 
+	Point	Marker;
+	int		MarkerSize = 5;
 };
 
 #endif
