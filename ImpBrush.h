@@ -63,6 +63,9 @@ public:
 	static int			c_nBrushCount;	// How many brushes we have,
 	static ImpBrush**	c_pBrushes;		// and what they are.
 
+	// Calculate the gradient of current position
+	int* Gradient(const Point source);
+
 private:
 	ImpressionistDoc * m_pDoc;
 

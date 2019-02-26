@@ -478,6 +478,14 @@ Fl_Menu_Item ImpressionistUI::brushTypeMenu[NUM_BRUSH_TYPE + 1] = {
 { 0 }
 };
 
+//StokeDrection Choick menu definition
+Fl_Menu_Item ImpressionistUI::directionControlerMenu[NUM_DIRECTION_CONTROL + 1] = {
+	{ "Slider/Right Mouse",		FL_ALT + 's',(Fl_Callback *)ImpressionistUI::cb_directionChoice, (void *)SLIDER_RIGHT_MOUSE},
+{ "Gradient",					FL_ALT + 'g',(Fl_Callback *)ImpressionistUI::cb_directionChoice, (void *)GRADIENT},
+{ "Brush Direction",			FL_ALT + 'b',(Fl_Callback *)ImpressionistUI::cb_directionChoice, (void *)BRUSH_DIRECTION},
+{ 0 }
+};
+
 
 
 //----------------------------------------------------

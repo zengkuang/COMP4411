@@ -54,3 +54,47 @@ void ImpBrush::SetColor(const Point source)
 	glColor4ub(color[0], color[1], color[2], Alpha);
 
 }
+
+int* ImpBrush::Gradient(const Point source)
+{
+	ImpressionistDoc* pDoc = GetDocument();
+
+	Glubyte color1[3];
+	Glubyte color2[3];
+	Glubyte color3[3];
+	Glubyte color4[3];
+	Glubyte color5[3];
+	Glubyte color6[3];
+	Glubyte color7[3];
+	Glubyte color8[3];
+	Glubyte color9[3];
+
+	memcpy(color1, pDoc->GetOriginalPixel(source.x - 1, source.y - 1), 3);
+	memcpy(color2, pDoc->GetOriginalPixel(source.x - 1, source.y), 3);
+	memcpy(color3, pDoc->GetOriginalPixel(source.x - 1, source.y + 1), 3);
+	memcpy(color4, pDoc->GetOriginalPixel(source.x, source.y - 1), 3);
+	memcpy(color5, pDoc->GetOriginalPixel(source.x, source.y), 3);
+	memcpy(color6, pDoc->GetOriginalPixel(source.x, source.y + 1), 3);
+	memcpy(color7, pDoc->GetOriginalPixel(source.x + 1, source.y - 1), 3);
+	memcpy(color8, pDoc->GetOriginalPixel(source.x + 1, source.y), 3);
+	memcpy(color9, pDoc->GetOriginalPixel(source.x + 1, source.y + 1), 3);
+
+	float grayscale1 = color1[0] * 0.2989 + color1[1] * 0.5870 + color1[2] * 0.1440;
+	float grayscale2 = color2[0] * 0.2989 + color2[1] * 0.5870 + color2[2] * 0.1440;
+	float grayscale3 = color3[0] * 0.2989 + color3[1] * 0.5870 + color3[2] * 0.1440;
+	float grayscale4 = color4[0] * 0.2989 + color4[1] * 0.5870 + color4[2] * 0.1440;
+	float grayscale5 = color5[0] * 0.2989 + color5[1] * 0.5870 + color5[2] * 0.1440;
+	float grayscale6 = color6[0] * 0.2989 + color6[1] * 0.5870 + color6[2] * 0.1440;
+	float grayscale7 = color7[0] * 0.2989 + color7[1] * 0.5870 + color7[2] * 0.1440;
+	float grayscale8 = color8[0] * 0.2989 + color8[1] * 0.5870 + color8[2] * 0.1440;
+	float grayscale9 = color9[0] * 0.2989 + color9[1] * 0.5870 + color9[2] * 0.1440;
+
+	float gradient_x = grayscale1 * (-1) + grayscale2 * (-2) + grayscale3 * (-1) + grayscale7 * 1 + grayscale8 * 2 + grayscale9 * 1;
+	float gradient_y = grayscale1 * 1 + grayscale4 * 2 + grayscale7 * 1 + grayscale3 * (-1) + grayscale6 * (-2) + grayscale9 * (-1);
+
+	int* current_gradient = new int[2];
+	current_gradient[0] = -gradient_y;
+	current_gradient[1] = gradient_x;
+
+	return current_gradient;
+}
