@@ -28,7 +28,7 @@ void ScatteredPointBrush::BrushMove(const Point source, const Point target)
 
 	if (pDoc == NULL)
 	{
-		Printf("ScatteredPointBrush::BrushMove document is NULL\n");
+		printf("ScatteredPointBrush::BrushMove document is NULL\n");
 	}
 
 	int size = pDoc->getSize();

@@ -50,7 +50,7 @@ void ScatteredLineBrush::BrushMove(const Point source, const Point target)
 
 			SetColor(ScatteredSource);
 			glVertex2d(ScatteredTarget.x - cos(angle*M_PI / 180)*size / 2, ScatteredTarget.y - sin(angle*M_PI / 180)*size / 2);
-			glVertex2d(ScatteredTarget.x + cos(angle*M_PI / 180)*size / 2, ScatteredTarget.y + sin(angle*M_PI / 180)*size / 2)
+			glVertex2d(ScatteredTarget.x + cos(angle*M_PI / 180)*size / 2, ScatteredTarget.y + sin(angle*M_PI / 180)*size / 2);
 
 		glEnd();
 	}
