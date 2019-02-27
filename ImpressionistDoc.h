@@ -51,7 +51,7 @@ public:
 	ImpBrush*			m_pCurrentBrush;
 
 	// The current active stroke direction
-	int					m_pCurrentStrokeDirection;
+	int					m_pCurrentStrokeDirection = 0;
 
 	// Size of the brush.
 	int m_nSize;

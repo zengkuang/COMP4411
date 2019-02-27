@@ -253,6 +253,8 @@ void ImpressionistUI::cb_brushChoice(Fl_Widget* o, void* v)
 	ImpressionistDoc* pDoc = pUI->getDocument();
 
 	int type = (int)v;
+	printf("%d \n", type);
+	pDoc->setBrushType(type);
 
 	if (type == BRUSH_LINES || type == BRUSH_SCATTERED_LINES)
 	{
@@ -260,8 +262,13 @@ void ImpressionistUI::cb_brushChoice(Fl_Widget* o, void* v)
 		pUI->m_LineAngleSlider->activate();
 		pUI->m_DirectionChoice->activate();
 	}
+	else
+	{
+		pUI->m_LineWidthSlider->deactivate();
+		pUI->m_LineAngleSlider->deactivate();
+		pUI->m_DirectionChoice->deactivate();
+	}
 
-	pDoc->setBrushType(type);
 }
 
 //-------------------------------------------------------------
@@ -307,7 +314,7 @@ void ImpressionistUI::cb_sizeSlides(Fl_Widget* o, void* v)
 //-----------------------------------------------------------
 void ImpressionistUI::cb_alphaSlides(Fl_Widget* o, void* v)
 {
-	((ImpressionistUI*)(o->user_data()))->m_nAlpha = int(((Fl_Slider*)o)->value());
+	((ImpressionistUI*)(o->user_data()))->m_nAlpha = float(((Fl_Slider*)o)->value());
 }
 
 //-----------------------------------------------------------
@@ -392,7 +399,7 @@ void ImpressionistUI::setSize(int size)
 //------------------------------------------------
 // Return the alpha
 //------------------------------------------------
-int ImpressionistUI::getAlpha()
+float ImpressionistUI::getAlpha()
 {
 	return m_nAlpha;
 }
@@ -572,7 +579,7 @@ ImpressionistUI::ImpressionistUI() {
 	m_LineWidthSlider->deactivate();
 
 	// Add line angle slider to the dialog
-	m_LineAngleSlider = new Fl_Value_Slider(10, 130, 300, 20, "Line Angle");
+	m_LineAngleSlider = new Fl_Value_Slider(10, 140, 300, 20, "Line Angle");
 	m_LineAngleSlider->user_data((void*)(this));
 	m_LineAngleSlider->type(FL_HOR_NICE_SLIDER);
 	m_LineAngleSlider->labelfont(FL_COURIER);
@@ -586,7 +593,7 @@ ImpressionistUI::ImpressionistUI() {
 	m_LineAngleSlider->deactivate();
 
 	// Add alpha slider to dialog
-	m_AlphaSlider = new Fl_Value_Slider(10, 160, 300, 20, "Alpha");
+	m_AlphaSlider = new Fl_Value_Slider(10, 170, 300, 20, "Alpha");
 	m_AlphaSlider->user_data((void*)(this));
 	m_AlphaSlider->type(FL_HOR_NICE_SLIDER);
 	m_AlphaSlider->labelfont(FL_COURIER);

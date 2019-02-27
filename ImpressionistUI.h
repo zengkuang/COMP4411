@@ -56,7 +56,7 @@ public:
 	int					getSize();
 	void				setSize(int size);
 
-	int					getAlpha();
+	float				getAlpha();
 	void				setAlpha(float alpha);
 
 	// Attribute of line brush
@@ -71,7 +71,7 @@ private:
 
 									// All attributes here
 	int		m_nSize;
-	int		m_nAlpha;
+	float	m_nAlpha;
 	int		m_nLineWidth;
 	int		m_nLineAngle;
 

@@ -46,12 +46,12 @@ void ImpBrush::SetColor(const Point source)
 
 
 	GLubyte color[3];
-
 	float Alpha = pDoc->getAlpha();
+	int nAlpha = Alpha * 255;
 
 	memcpy(color, pDoc->GetOriginalPixel(source), 3);
 
-	glColor4ub(color[0], color[1], color[2], Alpha);
+	glColor4ub(color[0],color[1],color[2],nAlpha);
 
 }
 

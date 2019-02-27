@@ -35,7 +35,7 @@ void ScatteredPointBrush::BrushMove(const Point source, const Point target)
 	glPointSize(1.0);
 
 	srand((unsigned)time(NULL));
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < 2*size; i++)
 	{
 		int x_cor = rand() % size - size / 2;
 		int y_cor = rand() % size - size / 2;

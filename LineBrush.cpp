@@ -42,6 +42,7 @@ void LineBrush::BrushMove(const Point source, const Point target)
 
 	glLineWidth((int)Line_width);
 	int* grad = Gradient(source);
+	printf("%d\n", Stroke_direction);
 	switch (Stroke_direction) {
 		case SLIDER_RIGHT_MOUSE:
 			

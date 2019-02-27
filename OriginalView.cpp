@@ -100,7 +100,7 @@ void OriginalView::setMarker(const Point Marker)
 
 void OriginalView::drawMarker()
 {
-	double original_y = Marker.y - m_nWindowHeight / 2;
+	double original_y = m_nWindowHeight - Marker.y;
 
 	glPointSize((float)MarkerSize);
 	glBegin(GL_POINTS);
