@@ -41,13 +41,12 @@ void LineBrush::BrushMove(const Point source, const Point target)
 	}
 
 	glLineWidth((int)Line_width);
-
+	int* grad = Gradient(source);
 	switch (Stroke_direction) {
 		case SLIDER_RIGHT_MOUSE:
 			
 			break;
 		case GRADIENT:
-			int* grad = Gradient(source);
 			Line_angle = atan2(grad[0], grad[1]);
 			break;
 		case BRUSH_DIRECTION:

@@ -33,7 +33,7 @@ void ScatteredCircleBrush::BrushMove(const Point source, const Point target)
 	}
 
 	int size = pDoc->getSize();
-	Gldouble r = (double)size*0.5;
+	double r = (double)size*0.5;
 	srand((unsigned)time(NULL));
 
 	for (int i = 0; i < 4; i++)
@@ -42,7 +42,7 @@ void ScatteredCircleBrush::BrushMove(const Point source, const Point target)
 		int y_cor = rand() % size - size / 2;
 		const Point ScatteredSource(x_cor + source.x, y_cor + source.y);
 		const Point ScatteredTarget(x_cor + target.x, y_cor + target.y);
-		glBegin(GL_PLOYGON);
+		glBegin(GL_POLYGON);
 
 			SetColor(ScatteredSource);
 			for (int i = 0; i < 360; i++)

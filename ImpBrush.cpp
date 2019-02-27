@@ -59,15 +59,15 @@ int* ImpBrush::Gradient(const Point source)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 
-	Glubyte color1[3];
-	Glubyte color2[3];
-	Glubyte color3[3];
-	Glubyte color4[3];
-	Glubyte color5[3];
-	Glubyte color6[3];
-	Glubyte color7[3];
-	Glubyte color8[3];
-	Glubyte color9[3];
+	GLubyte color1[3];
+	GLubyte color2[3];
+	GLubyte color3[3];
+	GLubyte color4[3];
+	GLubyte color5[3];
+	GLubyte color6[3];
+	GLubyte color7[3];
+	GLubyte color8[3];
+	GLubyte color9[3];
 
 	memcpy(color1, pDoc->GetOriginalPixel(source.x - 1, source.y - 1), 3);
 	memcpy(color2, pDoc->GetOriginalPixel(source.x - 1, source.y), 3);

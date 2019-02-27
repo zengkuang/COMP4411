@@ -22,7 +22,7 @@ void CircleBrush::BrushBegin(const Point source, const Point target)
 
 void CircleBrush::BrushMove(const Point source, const Point target)
 {
-	ImpressionistDoc* pDOc = GetDocument();
+	ImpressionistDoc* pDoc = GetDocument();
 	ImpressionistUI* dlg = pDoc->m_pUI;
 
 	if (pDoc == NULL)
@@ -31,7 +31,7 @@ void CircleBrush::BrushMove(const Point source, const Point target)
 		return;
 	}
 
-	int size = pDOc->getSize();
+	int size = pDoc->getSize();
 	GLdouble r = (double)size / 2;
 
 	glBegin(GL_POLYGON);
@@ -39,7 +39,7 @@ void CircleBrush::BrushMove(const Point source, const Point target)
 		SetColor(source);
 		for (int i = 0; i < 360; i++)
 		{
-			glvertex2d(target.x + r*cos(2 * M_PI*i / 360), target.y + r*sin(2 * M_PI*i / 360));
+			glVertex2d(target.x + r*cos(2 * M_PI*i / 360), target.y + r*sin(2 * M_PI*i / 360));
 		}
 
 	glEnd();
