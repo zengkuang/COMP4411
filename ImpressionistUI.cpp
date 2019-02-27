@@ -282,6 +282,7 @@ void ImpressionistUI::cb_directionChoice(Fl_Widget* o, void* v)
 	ImpressionistDoc* pDoc = pUI->getDocument();
 
 	int type = (int)v;
+	printf("%d\n", type);
 	pDoc->setStrokeDirectionType(type);
 }
 
