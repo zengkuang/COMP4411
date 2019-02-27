@@ -23,7 +23,7 @@ void PointBrush::BrushBegin( const Point source, const Point target )
 
 	int size = pDoc->getSize();
 
-
+	printf("Point draw \n");
 
 	glPointSize( (float)size );
 

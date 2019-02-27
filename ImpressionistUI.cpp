@@ -253,6 +253,8 @@ void ImpressionistUI::cb_brushChoice(Fl_Widget* o, void* v)
 	ImpressionistDoc* pDoc = pUI->getDocument();
 
 	int type = (int)v;
+	printf("%d \n", type);
+	pDoc->setBrushType(type);
 
 	if (type == BRUSH_LINES || type == BRUSH_SCATTERED_LINES)
 	{
@@ -261,7 +263,6 @@ void ImpressionistUI::cb_brushChoice(Fl_Widget* o, void* v)
 		pUI->m_DirectionChoice->activate();
 	}
 
-	pDoc->setBrushType(type);
 }
 
 //-------------------------------------------------------------
