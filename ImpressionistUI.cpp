@@ -520,6 +520,9 @@ ImpressionistUI::ImpressionistUI() {
 	// init values
 
 	m_nSize = 10;
+	m_nAlpha = 1.0;
+	m_nLineAngle = 0;
+	m_nLineWidth = 1;
 
 	// brush dialog definition
 	m_brushDialog = new Fl_Window(400, 325, "Brush Dialog");
