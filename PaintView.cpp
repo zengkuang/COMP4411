@@ -121,28 +121,25 @@ void PaintView::draw()
 			RestoreContent();
 			break;
 		case RIGHT_MOUSE_DOWN:
-			printf("Right Click! \n");
 			m_pDoc->setStartPoint(target);
 			break;
 		case RIGHT_MOUSE_DRAG:
-			printf("Right Drag! \n");
 			RestoreContent();
 			m_pDoc->setEndPoint(target);
 			glLineWidth(0.5);
 			glEnable(GL_LINE_SMOOTH);
 			glBegin(GL_LINES);
-			glColor3f(1, 0, 0);
+			glColor3f(0, 1, 0);
 			glVertex2d(m_pDoc->startPoint.x, m_pDoc->startPoint.y);
 			glVertex2d(m_pDoc->endPoint.x, m_pDoc->endPoint.y);
 			glEnd();
 			break;
 		case RIGHT_MOUSE_UP:
-			printf("Right Up! \n");
 			m_pDoc->setEndPoint(target);
 			if (m_pDoc->getBrushType() == 1 || m_pDoc->getBrushType() == 4)
 			{
 				m_pDoc->setLineAngle(m_pDoc->rightMouseAngle());
-				m_pDoc->setSize(m_pDoc->rightMouseSize());
+				m_pDoc->setSize(m_pDoc->rightMouseLineSize());
 			}
 			RestoreContent();
 			break;

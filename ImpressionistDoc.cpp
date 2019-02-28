@@ -269,7 +269,7 @@ void ImpressionistDoc::setLineAngle(int angle) {
 	m_pUI->setLineAngle(angle);
 }
 
-int ImpressionistDoc::rightMouseSize() {
+int ImpressionistDoc::rightMouseLineSize() {
 	int x1 = startPoint.x;
 	int x2 = endPoint.x;
 	int y1 = startPoint.y;
