@@ -48,14 +48,22 @@ void ImpBrush::SetColor(const Point source)
 	GLubyte color[3];
 	float Alpha = pDoc->getAlpha();
 	int nAlpha = Alpha * 255;
+	
+	int RedScale = pDoc->getRedScale();
+	int GreenScale = pDoc->getGreenScale();
+	int BlueScale = pDoc->getBlueScale();
 
 	memcpy(color, pDoc->GetOriginalPixel(source), 3);
+
+	color[0] = color[0] * RedScale / 255;
+	color[1] = color[1] * GreenScale / 255;
+	color[2] = color[2] * BlueScale / 255;
 
 	glColor4ub(color[0],color[1],color[2],nAlpha);
 
 }
 
-int* ImpBrush::Gradient(const Point source)
+float* ImpBrush::Gradient(const Point source)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 
@@ -92,9 +100,9 @@ int* ImpBrush::Gradient(const Point source)
 	float gradient_x = grayscale1 * (-1) + grayscale2 * (-2) + grayscale3 * (-1) + grayscale7 * 1 + grayscale8 * 2 + grayscale9 * 1;
 	float gradient_y = grayscale1 * 1 + grayscale4 * 2 + grayscale7 * 1 + grayscale3 * (-1) + grayscale6 * (-2) + grayscale9 * (-1);
 
-	int* current_gradient = new int[2];
-	current_gradient[0] = -gradient_y;
-	current_gradient[1] = gradient_x;
+	float* current_gradient = new float[2];
+	current_gradient[0] = gradient_x;
+	current_gradient[1] = gradient_y;
 
 	return current_gradient;
 }

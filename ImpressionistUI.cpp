@@ -219,6 +219,16 @@ void ImpressionistUI::cb_clear_canvas(Fl_Menu_* o, void* v)
 	pDoc->clearCanvas();
 }
 
+//-------------------------------------------------------------
+// Brings up the color scale dialog
+// This is called by the UI when the brushes menu item
+// is chosen
+//-------------------------------------------------------------
+void ImpressionistUI::cb_color_scale(Fl_Menu_* o, void* v)
+{
+	whoami(o)->m_colorDialog->show();
+}
+
 //------------------------------------------------------------
 // Causes the Impressionist program to exit
 // Called by the UI when the quit menu item is chosen
@@ -278,12 +288,7 @@ void ImpressionistUI::cb_brushChoice(Fl_Widget* o, void* v)
 //-------------------------------------------------------------
 void ImpressionistUI::cb_directionChoice(Fl_Widget* o, void* v)
 {
-	ImpressionistUI* pUI = ((ImpressionistUI *)(o->user_data()));
-	ImpressionistDoc* pDoc = pUI->getDocument();
-
-	int type = (int)v;
-	printf("%d\n", type);
-	pDoc->setStrokeDirectionType(type);
+	((ImpressionistUI*)(o->user_data()))->m_nStrokeDirection = (int)v;
 }
 
 //------------------------------------------------------------
@@ -336,6 +341,21 @@ void ImpressionistUI::cb_linewidthSlides(Fl_Widget* o, void* v)
 void ImpressionistUI::cb_lineangleSlides(Fl_Widget* o, void* v)
 {
 	((ImpressionistUI*)(o->user_data()))->m_nLineAngle = int(((Fl_Slider*)o)->value());
+}
+
+void ImpressionistUI::cb_redscaleSlides(Fl_Widget* o, void* v)
+{
+	((ImpressionistUI*)(o->user_data()))->m_nRedScale = int(((Fl_Slider*)o)->value());
+}
+
+void ImpressionistUI::cb_greenscaleSlides(Fl_Widget* o, void* v)
+{
+	((ImpressionistUI*)(o->user_data()))->m_nGreenScale = int(((Fl_Slider*)o)->value());
+}
+
+void ImpressionistUI::cb_bluescaleSlides(Fl_Widget* o, void* v)
+{
+	((ImpressionistUI*)(o->user_data()))->m_nBlueScale = int(((Fl_Slider*)o)->value());
 }
 
 //---------------------------------- per instance functions --------------------------------------
@@ -411,7 +431,7 @@ float ImpressionistUI::getAlpha()
 void ImpressionistUI::setAlpha(float alpha)
 {
 	m_nAlpha = alpha;
-	if (alpha <= 1.0)
+	if (alpha >= 0.0 && alpha <= 1.0)
 	{
 		m_AlphaSlider->value(m_nAlpha);
 	}
@@ -431,7 +451,7 @@ int ImpressionistUI::getLineWidth()
 void ImpressionistUI::setLineWidth(int width)
 {
 	m_nLineWidth = width;
-	if (width <= 40)
+	if (width >= 0 && width <= 40)
 	{
 		m_LineWidthSlider->value(m_nLineWidth);
 	}
@@ -451,9 +471,68 @@ int ImpressionistUI::getLineAngle()
 void ImpressionistUI::setLineAngle(int angle)
 {
 	m_nLineAngle = angle;
-	if (angle <= 359)
+	if (angle >= 0 && angle <= 359)
 	{
 		m_LineAngleSlider->value(m_nLineAngle);
+	}
+}
+
+//------------------------------------------------
+// Return the stroke direction
+//------------------------------------------------
+int ImpressionistUI::getStrokeDirection()
+{
+	return m_nStrokeDirection;
+}
+
+//------------------------------------------------
+// Return the red scale
+//------------------------------------------------
+int ImpressionistUI::getRedScale()
+{
+	return m_nRedScale;
+}
+
+void ImpressionistUI::setRedScale(int reds)
+{
+	m_nRedScale = reds;
+	if (reds >= 0 && reds <= 255)
+	{
+		m_RedScaleSlider->value(m_nRedScale);
+	}
+}
+
+//------------------------------------------------
+// Return the green scale
+//------------------------------------------------
+int ImpressionistUI::getGreenScale()
+{
+	return m_nGreenScale;
+}
+
+void ImpressionistUI::setGreenScale(int greens)
+{
+	m_nGreenScale = greens;
+	if (greens >= 0 && greens <= 255)
+	{
+		m_GreenScaleSlider->value(m_nGreenScale);
+	}
+}
+
+//------------------------------------------------
+// Return the blue scale
+//------------------------------------------------
+int ImpressionistUI::getBlueScale()
+{
+	return m_nBlueScale;
+}
+
+void ImpressionistUI::setBlueScale(int blues)
+{
+	m_nBlueScale = blues;
+	if (blues >= 0 && blues <= 255)
+	{
+		m_BlueScaleSlider->value(m_nBlueScale);
 	}
 }
 
@@ -463,13 +542,15 @@ Fl_Menu_Item ImpressionistUI::menuitems[] = {
 { "&Load Image...",	FL_ALT + 'l', (Fl_Callback *)ImpressionistUI::cb_load_image },
 { "&Save Image...",	FL_ALT + 's', (Fl_Callback *)ImpressionistUI::cb_save_image },
 { "&Brushes...",	FL_ALT + 'b', (Fl_Callback *)ImpressionistUI::cb_brushes },
-{ "&Clear Canvas", FL_ALT + 'c', (Fl_Callback *)ImpressionistUI::cb_clear_canvas, 0, FL_MENU_DIVIDER },
+{ "&Clear Canvas",  FL_ALT + 'c', (Fl_Callback *)ImpressionistUI::cb_clear_canvas, 0, FL_MENU_DIVIDER },
+
+{ "&Color",			FL_ALT + 'k', (Fl_Callback *)ImpressionistUI::cb_color_scale, 0,FL_MENU_DIVIDER },
 
 { "&Quit",			FL_ALT + 'q', (Fl_Callback *)ImpressionistUI::cb_exit },
 { 0 },
 
 { "&Help",		0, 0, 0, FL_SUBMENU },
-{ "&About",	FL_ALT + 'a', (Fl_Callback *)ImpressionistUI::cb_about },
+{ "&About",			FL_ALT + 'a', (Fl_Callback *)ImpressionistUI::cb_about },
 { 0 },
 
 { 0 }
@@ -531,6 +612,10 @@ ImpressionistUI::ImpressionistUI() {
 	m_nAlpha = 1.0;
 	m_nLineAngle = 0;
 	m_nLineWidth = 1;
+	m_nStrokeDirection = 0;
+	m_nRedScale = 255;
+	m_nGreenScale = 255;
+	m_nBlueScale = 255;
 
 	// brush dialog definition
 	m_brushDialog = new Fl_Window(400, 325, "Brush Dialog");
@@ -609,4 +694,47 @@ ImpressionistUI::ImpressionistUI() {
 
 	m_brushDialog->end();
 
+	// color dialog define
+	m_colorDialog = new Fl_Window(400, 140, "Color Dialog");
+
+	// Add Red scale slider to dialog
+	m_RedScaleSlider = new Fl_Value_Slider(10, 30, 320, 20, "RED");
+	m_RedScaleSlider->user_data((void*)(this));
+	m_RedScaleSlider->type(FL_HOR_NICE_SLIDER);
+	m_RedScaleSlider->labelfont(FL_COURIER);
+	m_RedScaleSlider->labelsize(12);
+	m_RedScaleSlider->minimum(0);
+	m_RedScaleSlider->maximum(255);
+	m_RedScaleSlider->step(1);
+	m_RedScaleSlider->value(m_nRedScale);
+	m_RedScaleSlider->align(FL_ALIGN_RIGHT);
+	m_RedScaleSlider->callback(cb_redscaleSlides);
+
+	// Add Green scale slider to dialog
+	m_GreenScaleSlider = new Fl_Value_Slider(10, 60, 320, 20, "GREEN");
+	m_GreenScaleSlider->user_data((void*)(this));
+	m_GreenScaleSlider->type(FL_HOR_NICE_SLIDER);
+	m_GreenScaleSlider->labelfont(FL_COURIER);
+	m_GreenScaleSlider->labelsize(12);
+	m_GreenScaleSlider->minimum(0);
+	m_GreenScaleSlider->maximum(255);
+	m_GreenScaleSlider->step(1);
+	m_GreenScaleSlider->value(m_nGreenScale);
+	m_GreenScaleSlider->align(FL_ALIGN_RIGHT);
+	m_GreenScaleSlider->callback(cb_greenscaleSlides);
+
+	// Add Blue scale slider to dialog
+	m_BlueScaleSlider = new Fl_Value_Slider(10, 90, 320, 20, "BLUE");
+	m_BlueScaleSlider->user_data((void*)(this));
+	m_BlueScaleSlider->type(FL_HOR_NICE_SLIDER);
+	m_BlueScaleSlider->labelfont(FL_COURIER);
+	m_BlueScaleSlider->labelsize(12);
+	m_BlueScaleSlider->minimum(0);
+	m_BlueScaleSlider->maximum(255);
+	m_BlueScaleSlider->step(1);
+	m_BlueScaleSlider->value(m_nBlueScale);
+	m_BlueScaleSlider->align(FL_ALIGN_RIGHT);
+	m_BlueScaleSlider->callback(cb_bluescaleSlides);
+
+	m_colorDialog->end();
 }

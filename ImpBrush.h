@@ -64,7 +64,7 @@ public:
 	static ImpBrush**	c_pBrushes;		// and what they are.
 
 	// Calculate the gradient of current position
-	int* Gradient(const Point source);
+	float* Gradient(const Point source);
 
 private:
 	ImpressionistDoc * m_pDoc;

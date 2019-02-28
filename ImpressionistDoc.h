@@ -25,7 +25,7 @@ public:
 
 	int     clearCanvas();                  // called by the UI to clear the drawing canvas
 	void	setBrushType(int type);			// called by the UI to set the brushType
-	void	setStrokeDirectionType(int type);
+	int		getStrokeDirectionType();
 	int		getSize();						// get the UI size
 	void	setSize(int size);				// set the UI size
 	float	getAlpha();						// get the UI alpha
@@ -33,15 +33,18 @@ public:
 	int		getLineAngle();					// get the UI line_angle of the line angle
 	char*	getImageName();					// get the current image name
 
+	int		getRedScale();					// get the UI red_scale of the color scale
+	int		getGreenScale();				// get the UI green_scale of the color scale
+	int		getBlueScale();					// get the UI blue_scale of the color scale
 
 											// Attributes
 public:
 	// Dimensions of original window.
 	int				m_nWidth,
-		m_nHeight;
+					m_nHeight;
 	// Dimensions of the paint window.
 	int				m_nPaintWidth,
-		m_nPaintHeight;
+					m_nPaintHeight;
 	// Bitmaps for original image and painting.
 	unsigned char*	m_ucBitmap;
 	unsigned char*	m_ucPainting;
@@ -49,9 +52,6 @@ public:
 
 	// The current active brush.
 	ImpBrush*			m_pCurrentBrush;
-
-	// The current active stroke direction
-	int					m_pCurrentStrokeDirection = 0;
 
 	// Size of the brush.
 	int m_nSize;

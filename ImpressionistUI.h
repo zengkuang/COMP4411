@@ -44,6 +44,13 @@ public:
 	Fl_Slider*			m_LineAngleSlider;
 	Fl_Slider*			m_AlphaSlider;
 
+	// for color scale dailog
+	Fl_Window*			m_colorDialog;
+
+	Fl_Slider*			m_RedScaleSlider;
+	Fl_Slider*			m_GreenScaleSlider;
+	Fl_Slider*			m_BlueScaleSlider;
+
 	// Member functions
 	void				setDocument(ImpressionistDoc* doc);
 	ImpressionistDoc*	getDocument();
@@ -66,6 +73,20 @@ public:
 
 	int					getLineAngle();
 	void				setLineAngle(int angle);
+
+	int					getStrokeDirection();
+
+	// Attribute of the color scale
+
+	int					getRedScale();
+	void				setRedScale(int reds);
+
+	int					getGreenScale();
+	void				setGreenScale(int greens);
+
+	int					getBlueScale();
+	void				setBlueScale(int blues);
+
 private:
 	ImpressionistDoc * m_pDoc;		// pointer to document to communicate with the document
 
@@ -74,6 +95,10 @@ private:
 	float	m_nAlpha;
 	int		m_nLineWidth;
 	int		m_nLineAngle;
+	int		m_nStrokeDirection;
+	int		m_nRedScale;
+	int		m_nGreenScale;
+	int		m_nBlueScale;
 
 	// Static class members
 	static Fl_Menu_Item		menuitems[];
@@ -97,6 +122,10 @@ private:
 	static void cb_alphaSlides(Fl_Widget* o, void* v);
 	static void cb_linewidthSlides(Fl_Widget*o, void *v);
 	static void cb_lineangleSlides(Fl_Widget* o, void*v);
+	static void cb_color_scale(Fl_Menu_* o, void* v);
+	static void cb_redscaleSlides(Fl_Widget* o, void* v);
+	static void cb_greenscaleSlides(Fl_Widget* o, void* v);
+	static void cb_bluescaleSlides(Fl_Widget* o, void* v);
 
 };
 

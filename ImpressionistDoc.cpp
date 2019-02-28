@@ -32,6 +32,10 @@ ImpressionistDoc::ImpressionistDoc()
 	m_ucBitmap = NULL;
 	m_ucPainting = NULL;
 
+	pointer_history = new Point*[2];
+	pointer_history[0] = new Point(0,0);
+	pointer_history[1] = new Point(0, 0);
+
 
 	// create one instance of each brush
 	ImpBrush::c_nBrushCount = NUM_BRUSH_TYPE;
@@ -86,9 +90,9 @@ void ImpressionistDoc::setBrushType(int type)
 // Called by the UI when the user changes the stroke direction type.
 // type: one of the defined stroke direction types.
 //---------------------------------------------------------
-void ImpressionistDoc::setStrokeDirectionType(int type)
+int ImpressionistDoc::getStrokeDirectionType()
 {
-	m_pCurrentStrokeDirection = type;
+	return m_pUI->getStrokeDirection();
 }
 
 //---------------------------------------------------------
@@ -112,6 +116,21 @@ int ImpressionistDoc::getLineWidth()
 int ImpressionistDoc::getLineAngle()
 {
 	return m_pUI->getLineAngle();
+}
+
+int ImpressionistDoc::getRedScale()
+{
+	return m_pUI->getRedScale();
+}
+
+int ImpressionistDoc::getGreenScale()
+{
+	return m_pUI->getGreenScale();
+}
+
+int ImpressionistDoc::getBlueScale()
+{
+	return m_pUI->getBlueScale();
 }
 
 //---------------------------------------------------------
