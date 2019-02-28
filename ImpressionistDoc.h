@@ -28,14 +28,19 @@ public:
 	int		getStrokeDirectionType();
 	int		getSize();						// get the UI size
 	void	setSize(int size);				// set the UI size
+	void	setLineAngle(int angle);	    // set the UI lineAngle
 	float	getAlpha();						// get the UI alpha
 	int		getLineWidth();					// get the UI line_width of the line brush
 	int		getLineAngle();					// get the UI line_angle of the line angle
 	char*	getImageName();					// get the current image name
-
+	int 	getBrushType();                 // get the Brush type
 	int		getRedScale();					// get the UI red_scale of the color scale
 	int		getGreenScale();				// get the UI green_scale of the color scale
 	int		getBlueScale();					// get the UI blue_scale of the color scale
+	void 	setStartPoint(Point start);
+	void 	setEndPoint(Point end);
+	int 	rightMouseAngle();
+	int 	rightMouseSize();
 
 											// Attributes
 public:
@@ -55,8 +60,13 @@ public:
 
 	// Size of the brush.
 	int m_nSize;
+	int m_nType;
 
 	ImpressionistUI*	m_pUI;
+	
+	//Right key control
+	Point startPoint;
+	Point endPoint;
 
 	// Operations
 

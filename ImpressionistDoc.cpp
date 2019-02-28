@@ -6,7 +6,7 @@
 //
 
 #include <FL/fl_ask.H>
-
+#include <math.h>
 #include "impressionistDoc.h"
 #include "impressionistUI.h"
 
@@ -36,7 +36,7 @@ ImpressionistDoc::ImpressionistDoc()
 	pointer_history[0] = new Point(0,0);
 	pointer_history[1] = new Point(0, 0);
 
-
+	m_nType = 0;
 	// create one instance of each brush
 	ImpBrush::c_nBrushCount = NUM_BRUSH_TYPE;
 	ImpBrush::c_pBrushes = new ImpBrush*[ImpBrush::c_nBrushCount];
@@ -84,6 +84,8 @@ char* ImpressionistDoc::getImageName()
 void ImpressionistDoc::setBrushType(int type)
 {
 	m_pCurrentBrush = ImpBrush::c_pBrushes[type];
+	m_nType = type;
+
 }
 
 //---------------------------------------------------------
@@ -101,6 +103,10 @@ int ImpressionistDoc::getStrokeDirectionType()
 int ImpressionistDoc::getSize()
 {
 	return m_pUI->getSize();
+}
+// Return the type of Brush
+int ImpressionistDoc::getBrushType() {
+	return m_nType;
 }
 
 float ImpressionistDoc::getAlpha()
@@ -248,3 +254,37 @@ GLubyte* ImpressionistDoc::GetOriginalPixel(const Point p)
 	return GetOriginalPixel(p.x, p.y);
 }
 
+void ImpressionistDoc::setStartPoint(Point start) {
+	startPoint = start;
+}
+
+void ImpressionistDoc::setEndPoint(Point end) {
+	endPoint = end;
+}
+void ImpressionistDoc::setSize(int size) {
+	m_pUI->setSize(size);
+}
+
+void ImpressionistDoc::setLineAngle(int angle) {
+	m_pUI->setLineAngle(angle);
+}
+
+int ImpressionistDoc::rightMouseSize() {
+	int x1 = startPoint.x;
+	int x2 = endPoint.x;
+	int y1 = startPoint.y;
+	int y2 = endPoint.y;
+	int del_x = x2 - x1;
+	int del_y = y2 - y1;
+	int result = sqrt(del_x*del_x + del_y * del_y);
+	return result;
+}
+
+int ImpressionistDoc::rightMouseAngle() {
+	int result = atan2(endPoint.y - startPoint.y, endPoint.x - startPoint.x) * 180 / 3.14159265;
+	if (result < 0)
+	{
+		result += 360;
+	}
+	return result;
+}
