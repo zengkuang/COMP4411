@@ -358,6 +358,32 @@ void ImpressionistUI::cb_bluescaleSlides(Fl_Widget* o, void* v)
 	((ImpressionistUI*)(o->user_data()))->m_nBlueScale = int(((Fl_Slider*)o)->value());
 }
 
+void ImpressionistUI::cb_spacingSlides(Fl_Widget* o, void* v)
+{
+	((ImpressionistUI*)(o->user_data()))->m_nSpacing = int(((Fl_Slider*)o)->value());
+}
+
+void ImpressionistUI::cb_randSpacing(Fl_Widget* o, void* v)
+{
+	ImpressionistUI* pUI = ((ImpressionistUI*)(o->user_data()));
+
+	if (pUI->m_nRandSpacing == TRUE)
+	{
+		pUI->m_nRandSpacing = FALSE;
+	}
+	else {
+		pUI->m_nRandSpacing = TRUE;
+	}
+}
+
+void ImpressionistUI::cb_autoPaint(Fl_Widget* o, void* v)
+{
+	ImpressionistUI* pUI = ((ImpressionistUI*)(o->user_data()));
+	ImpressionistDoc* pDoc = pUI->getDocument();
+
+	pDoc->m_pCurrentBrush->Autodraw();
+}
+
 //---------------------------------- per instance functions --------------------------------------
 
 //------------------------------------------------
@@ -536,6 +562,30 @@ void ImpressionistUI::setBlueScale(int blues)
 	}
 }
 
+int ImpressionistUI::getSpacing()
+{
+	return m_nSpacing;
+}
+
+void ImpressionistUI::setSpacing(int spacing)
+{
+	m_nSpacing = spacing;
+	if(spacing > 0 && spacing < 16)
+	{
+		m_SpacingSlider->value(m_nSpacing);
+	}
+}
+
+bool ImpressionistUI::getRandSpacing()
+{
+	return m_nRandSpacing;
+}
+
+void ImpressionistUI::setRandspacing(bool rand)
+{
+	m_nRandSpacing = rand;
+}
+
 // Main menu definition
 Fl_Menu_Item ImpressionistUI::menuitems[] = {
 	{ "&File",		0, 0, 0, FL_SUBMENU },
@@ -564,6 +614,8 @@ Fl_Menu_Item ImpressionistUI::brushTypeMenu[NUM_BRUSH_TYPE + 1] = {
 { "Scattered Points",	FL_ALT + 'q', (Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_SCATTERED_POINTS },
 { "Scattered Lines",	FL_ALT + 'm', (Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_SCATTERED_LINES },
 { "Scattered Circles",	FL_ALT + 'd', (Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_SCATTERED_CIRCLES },
+{ "Sharpen Filter",		FL_ALT + 'f', (Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)FILTER_SHARPEN},
+{ "Blur Filter",		FL_ALT + 'b', (Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)FILTER_BLUR},
 { 0 }
 };
 
@@ -616,6 +668,8 @@ ImpressionistUI::ImpressionistUI() {
 	m_nRedScale = 255;
 	m_nGreenScale = 255;
 	m_nBlueScale = 255;
+	m_nSpacing = 4;
+	m_nRandSpacing = TRUE;
 
 	// brush dialog definition
 	m_brushDialog = new Fl_Window(400, 325, "Brush Dialog");
@@ -630,7 +684,7 @@ ImpressionistUI::ImpressionistUI() {
 	m_ClearCanvasButton->callback(cb_clear_canvas_button);
 
 	// Add a direction controler type choice to the dialog
-	m_DirectionChoice = new Fl_Choice(50, 45, 150, 25, "&Stroke Direction");
+	m_DirectionChoice = new Fl_Choice(150, 45, 150, 25, "&Stroke Direction");
 	m_DirectionChoice->user_data((void*)(this));
 	m_DirectionChoice->menu(directionControlerMenu);
 	m_DirectionChoice->callback(cb_directionChoice);
@@ -691,6 +745,29 @@ ImpressionistUI::ImpressionistUI() {
 	m_AlphaSlider->align(FL_ALIGN_RIGHT);
 	m_AlphaSlider->callback(cb_alphaSlides);
 
+	// Add spacing slider to dialog
+	m_SpacingSlider = new Fl_Value_Slider(20, 250, 120, 20, "Spacing");
+	m_SpacingSlider->user_data((void*)(this));
+	m_SpacingSlider->type(FL_HOR_NICE_SLIDER);
+	m_SpacingSlider->labelfont(FL_COURIER);
+	m_SpacingSlider->labelsize(12);
+	m_SpacingSlider->minimum(0);
+	m_SpacingSlider->maximum(16);
+	m_SpacingSlider->step(1);
+	m_SpacingSlider->value(m_nSpacing);
+	m_SpacingSlider->align(FL_ALIGN_RIGHT);
+	m_SpacingSlider->callback(cb_spacingSlides);
+
+	// Add rand spacing light button to dialog
+	m_RandSpacingButton = new Fl_Light_Button(200, 250, 100, 20, "&Size Rand.");
+	m_RandSpacingButton->user_data((void*)(this));
+	m_RandSpacingButton->callback(cb_randSpacing);
+
+	// Add auto paint button to dialog
+	m_AutoPaintButton = new Fl_Button(320, 250, 50, 20, "&Paint");
+	m_AutoPaintButton->user_data((void*)(this));
+	m_AutoPaintButton->callback(cb_autoPaint);
+	
 
 	m_brushDialog->end();
 

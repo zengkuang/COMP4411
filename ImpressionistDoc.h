@@ -37,6 +37,8 @@ public:
 	int		getRedScale();					// get the UI red_scale of the color scale
 	int		getGreenScale();				// get the UI green_scale of the color scale
 	int		getBlueScale();					// get the UI blue_scale of the color scale
+	int		getSpacing();
+	bool	getRandSpacing();
 	void 	setStartPoint(Point start);
 	void 	setEndPoint(Point end);
 	int 	rightMouseAngle();

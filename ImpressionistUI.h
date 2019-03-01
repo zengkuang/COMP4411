@@ -51,6 +51,11 @@ public:
 	Fl_Slider*			m_GreenScaleSlider;
 	Fl_Slider*			m_BlueScaleSlider;
 
+	// for auto draw
+	Fl_Slider*			m_SpacingSlider;
+	Fl_Light_Button*	m_RandSpacingButton;
+	Fl_Button*			m_AutoPaintButton;
+
 	// Member functions
 	void				setDocument(ImpressionistDoc* doc);
 	ImpressionistDoc*	getDocument();
@@ -87,6 +92,12 @@ public:
 	int					getBlueScale();
 	void				setBlueScale(int blues);
 
+	int					getSpacing();
+	void				setSpacing(int spacing);
+
+	bool				getRandSpacing();
+	void				setRandspacing(bool rand);
+
 private:
 	ImpressionistDoc * m_pDoc;		// pointer to document to communicate with the document
 
@@ -99,6 +110,8 @@ private:
 	int		m_nRedScale;
 	int		m_nGreenScale;
 	int		m_nBlueScale;
+	int		m_nSpacing;
+	bool	m_nRandSpacing;
 
 	// Static class members
 	static Fl_Menu_Item		menuitems[];
@@ -126,6 +139,9 @@ private:
 	static void cb_redscaleSlides(Fl_Widget* o, void* v);
 	static void cb_greenscaleSlides(Fl_Widget* o, void* v);
 	static void cb_bluescaleSlides(Fl_Widget* o, void* v);
+	static void cb_spacingSlides(Fl_Widget* o, void* v);
+	static void cb_randSpacing(Fl_Widget* o, void* v);
+	static void cb_autoPaint(Fl_Widget* o, void* v);
 
 };
 

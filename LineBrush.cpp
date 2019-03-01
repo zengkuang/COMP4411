@@ -42,17 +42,17 @@ void LineBrush::BrushMove(const Point source, const Point target)
 
 	glLineWidth((float)Line_width);
 	float* grad = Gradient(source);
-	printf("%d\n", Stroke_direction);
-	printf("%f\t%f\n", grad[0], grad[1]);
+	//printf("%d\n", Stroke_direction);
+	//printf("%f\t%f\n", grad[0], grad[1]);
 	switch (Stroke_direction) {
 		case SLIDER_RIGHT_MOUSE:
 			
 			break;
 		case GRADIENT:
-			printf("gradient\n");
+			//printf("gradient\n");
 			grad = Gradient(source);
 			Line_angle = atan2(-grad[1], grad[0])*180/M_PI;
-			printf("%d\n", Line_angle);
+			//printf("%d\n", Line_angle);
 			break;
 		case BRUSH_DIRECTION:
 			Line_angle = atan2((pDoc->pointer_history[0]->y - pDoc->pointer_history[1]->y), (pDoc->pointer_history[0]->x - pDoc->pointer_history[1]->x))*180/M_PI;
@@ -72,4 +72,9 @@ void LineBrush::BrushMove(const Point source, const Point target)
 void LineBrush::BrushEnd(const Point source, const Point target)
 {
 	// do nothing so far
+}
+
+void LineBrush::Autodraw()
+{
+
 }

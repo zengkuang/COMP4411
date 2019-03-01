@@ -48,12 +48,93 @@ void ImpBrush::SetColor(const Point source)
 	GLubyte color[3];
 	float Alpha = pDoc->getAlpha();
 	int nAlpha = Alpha * 255;
+
+	int brushType = pDoc->getBrushType();
 	
 	int RedScale = pDoc->getRedScale();
 	int GreenScale = pDoc->getGreenScale();
 	int BlueScale = pDoc->getBlueScale();
 
 	memcpy(color, pDoc->GetOriginalPixel(source), 3);
+
+	if (brushType == FILTER_SHARPEN)
+	{
+		int leftup_x = source.x - 1;
+		int leftup_y = source.y - 1;
+		int filteredRed = 0;
+		int filteredGreen = 0;
+		int filteredBlue = 0;
+		
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				int current_x = leftup_x + i;
+				int current_y = leftup_y + j;
+				if (leftup_x < 0)
+				{
+					current_x = 1;
+				}
+				else if (leftup_x + i > pDoc->m_nWidth)
+				{
+					current_x = pDoc->m_nWidth - 1;
+				}
+				if (leftup_y < 0)
+				{
+					current_y = 1;
+				}
+				else if (leftup_y + j > pDoc->m_nHeight)
+				{
+					current_y = pDoc->m_nHeight - 1;
+				}
+				filteredRed += pDoc->GetOriginalPixel(current_x, current_y)[0] * SharpenMatrix[i + 3 * j];
+				filteredGreen += pDoc->GetOriginalPixel(current_x, current_y)[1] * SharpenMatrix[i + 3 * j];
+				filteredBlue += pDoc->GetOriginalPixel(current_x, current_y)[2] * SharpenMatrix[i + 3 * j];
+			}
+		}
+		color[0] = filteredRed;
+		color[1] = filteredGreen;
+		color[2] = filteredBlue;
+	}
+	else if (brushType == FILTER_BLUR)
+	{
+		int leftup_x = source.x - 1;
+		int leftup_y = source.y - 1;
+		float filteredRed = 0.0;
+		float filteredGreen = 0.0;
+		float filteredBlue = 0.0;
+
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				int current_x = leftup_x + i;
+				int current_y = leftup_y + j;
+				if (leftup_x < 0)
+				{
+					current_x = 1;
+				}
+				else if (leftup_x + i > pDoc->m_nWidth)
+				{
+					current_x = pDoc->m_nWidth - 1;
+				}
+				if (leftup_y < 0)
+				{
+					current_y = 1;
+				}
+				else if (leftup_y + j > pDoc->m_nHeight)
+				{
+					current_y = pDoc->m_nHeight - 1;
+				}
+				filteredRed += pDoc->GetOriginalPixel(current_x, current_y)[0] * BlurMatrix[i + 3 * j];
+				filteredGreen += pDoc->GetOriginalPixel(current_x, current_y)[1] * BlurMatrix[i + 3 * j];
+				filteredBlue += pDoc->GetOriginalPixel(current_x, current_y)[2] * BlurMatrix[i + 3 * j];
+			}
+		}
+		color[0] = filteredRed;
+		color[1] = filteredGreen;
+		color[2] = filteredBlue;
+	}
 
 	color[0] = color[0] * RedScale / 255;
 	color[1] = color[1] * GreenScale / 255;

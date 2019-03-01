@@ -40,9 +40,13 @@ void PointBrush::BrushMove( const Point source, const Point target )
 		return;
 	}
 
-	glBegin( GL_POINTS );
-		SetColor( source );
+	printf("%d\t%d\n", source.x, source.y);
+	printf("%d\t%d\n", target.x, target.y);
+	printf("%d\t%d\n", pDoc->m_nWidth, pDoc->m_nHeight);
 
+	glBegin( GL_POINTS );
+		
+		SetColor( source );
 		glVertex2d( target.x, target.y );
 
 	glEnd();
@@ -53,3 +57,7 @@ void PointBrush::BrushEnd( const Point source, const Point target )
 	// do nothing so far
 }
 
+void PointBrush::Autodraw()
+{
+
+}

@@ -19,6 +19,8 @@
 #include "ScatteredPointBrush.h"
 #include "ScatteredLineBrush.h"
 #include "ScatteredCircleBrush.h"
+#include "SharpenFilter.h"
+#include "BlurFilter.h"
 
 
 #define DESTROY(p)	{  if ((p)!=NULL) {delete [] p; p=NULL; } }
@@ -54,6 +56,10 @@ ImpressionistDoc::ImpressionistDoc()
 		= new ScatteredLineBrush(this, "Scattered Lines");
 	ImpBrush::c_pBrushes[BRUSH_SCATTERED_CIRCLES]
 		= new ScatteredCircleBrush(this, "Scattered Circles");
+	ImpBrush::c_pBrushes[FILTER_SHARPEN]
+		= new SharpenFilter(this, "Sharpen Filter");
+	ImpBrush::c_pBrushes[FILTER_BLUR]
+		= new BlurFilter(this, "Blur Filter");
 
 	// make one of the brushes current
 	m_pCurrentBrush = ImpBrush::c_pBrushes[0];
@@ -137,6 +143,16 @@ int ImpressionistDoc::getGreenScale()
 int ImpressionistDoc::getBlueScale()
 {
 	return m_pUI->getBlueScale();
+}
+
+int ImpressionistDoc::getSpacing()
+{
+	return m_pUI->getSpacing();
+}
+
+bool ImpressionistDoc::getRandSpacing()
+{
+	return m_pUI->getRandSpacing();
 }
 
 //---------------------------------------------------------

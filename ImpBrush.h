@@ -8,6 +8,7 @@
 //
 
 #include <stdlib.h>
+#include <ctime>
 
 // Each brush type has an associated constant.
 enum
@@ -18,6 +19,8 @@ enum
 	BRUSH_SCATTERED_POINTS,
 	BRUSH_SCATTERED_LINES,
 	BRUSH_SCATTERED_CIRCLES,
+	FILTER_SHARPEN,
+	FILTER_BLUR,
 	NUM_BRUSH_TYPE // Make sure this stays at the end!
 };
 
@@ -27,6 +30,20 @@ enum
 	GRADIENT,
 	BRUSH_DIRECTION,
 	NUM_DIRECTION_CONTROL	// Make sure this stay at end
+};
+
+static float BlurMatrix[9] =
+{
+	0.0625, 0.125, 0.0625,
+	0.125, 0.250, 0.125,
+	0.0625, 0.125, 0.0625
+};
+
+static int SharpenMatrix[9] =
+{
+	0, -1, 0,
+	-1, 5, -1,
+	0, -1, 0
 };
 
 class ImpressionistDoc; // Pre-declaring class
@@ -50,6 +67,7 @@ public:
 	virtual void BrushBegin(const Point source, const Point target) = 0;
 	virtual void BrushMove(const Point source, const Point target) = 0;
 	virtual void BrushEnd(const Point source, const Point target) = 0;
+	virtual void Autodraw() = 0;
 
 	// according to the source image and the position, determine the draw color
 	void SetColor(const Point source);
