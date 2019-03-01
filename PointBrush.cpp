@@ -22,9 +22,6 @@ void PointBrush::BrushBegin( const Point source, const Point target )
 	ImpressionistUI* dlg=pDoc->m_pUI;
 
 	int size = pDoc->getSize();
-
-	printf("Point draw \n");
-
 	glPointSize( (float)size );
 
 	BrushMove( source, target );

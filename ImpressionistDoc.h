@@ -42,7 +42,7 @@ public:
 	void 	setStartPoint(Point start);
 	void 	setEndPoint(Point end);
 	int 	rightMouseAngle();
-	int 	rightMouseSize();
+	int 	rightMouseLineSize();
 
 											// Attributes
 public:

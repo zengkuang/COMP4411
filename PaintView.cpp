@@ -110,6 +110,7 @@ void PaintView::draw()
 		{
 		case LEFT_MOUSE_DOWN:
 			m_pDoc->m_pCurrentBrush->BrushBegin( source, target );
+			printf("t x:%d y:%d\n",target.x,target.y );
 			break;
 		case LEFT_MOUSE_DRAG:
 			m_pDoc->m_pCurrentBrush->BrushMove( source, target );
@@ -121,28 +122,25 @@ void PaintView::draw()
 			RestoreContent();
 			break;
 		case RIGHT_MOUSE_DOWN:
-			printf("Right Click! \n");
 			m_pDoc->setStartPoint(target);
 			break;
 		case RIGHT_MOUSE_DRAG:
-			printf("Right Drag! \n");
 			RestoreContent();
 			m_pDoc->setEndPoint(target);
 			glLineWidth(0.5);
 			glEnable(GL_LINE_SMOOTH);
 			glBegin(GL_LINES);
-			glColor3f(1, 0, 0);
+			glColor3f(0, 1, 0);
 			glVertex2d(m_pDoc->startPoint.x, m_pDoc->startPoint.y);
 			glVertex2d(m_pDoc->endPoint.x, m_pDoc->endPoint.y);
 			glEnd();
 			break;
 		case RIGHT_MOUSE_UP:
-			printf("Right Up! \n");
 			m_pDoc->setEndPoint(target);
 			if (m_pDoc->getBrushType() == 1 || m_pDoc->getBrushType() == 4)
 			{
 				m_pDoc->setLineAngle(m_pDoc->rightMouseAngle());
-				m_pDoc->setSize(m_pDoc->rightMouseSize());
+				m_pDoc->setSize(m_pDoc->rightMouseLineSize());
 			}
 			RestoreContent();
 			break;
@@ -191,6 +189,37 @@ int PaintView::handle(int event)
 			m_pDoc->pointer_history[1] = m_pDoc->pointer_history[0];
 			m_pDoc->pointer_history[0] = new Point(coord.x, coord.y);
 		}
+		// Prevent print outside the screen.
+		if (coord.x <= 0) {
+			if (Fl::event_button() > 1) {
+				eventToDo = RIGHT_MOUSE_UP;
+			}
+			else {
+				eventToDo = LEFT_MOUSE_UP;
+			}
+		}
+		if (coord.x >= m_pDoc->m_nWidth) {
+			//coord.x = m_pDoc->m_nWidth;
+			if (Fl::event_button() > 1) {
+				eventToDo = RIGHT_MOUSE_UP;
+			}
+			else {
+				eventToDo = LEFT_MOUSE_UP;
+			}
+		}
+
+		if (coord.y <= 0) {
+			coord.y = 0;
+		}
+		if (coord.y >= m_pDoc->m_nHeight) {
+			if (Fl::event_button() > 1) {
+				eventToDo = RIGHT_MOUSE_UP;
+			}
+			else {
+				eventToDo = LEFT_MOUSE_UP;
+			}
+		}
+
 		m_pDoc->m_pUI->m_origView->setMarker(coord);
 		isAnEvent=1;
 		redraw();
