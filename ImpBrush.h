@@ -39,11 +39,11 @@ static float BlurMatrix[9] =
 	0.0625, 0.125, 0.0625
 };
 
-static int SharpenMatrix[9] =
+static float SharpenMatrix[9] =
 {
-	0, -1, 0,
-	-1, 5, -1,
-	0, -1, 0
+	0,-1,0,
+	-1,5,-1,
+	0,-1,0
 };
 
 class ImpressionistDoc; // Pre-declaring class
@@ -67,7 +67,6 @@ public:
 	virtual void BrushBegin(const Point source, const Point target) = 0;
 	virtual void BrushMove(const Point source, const Point target) = 0;
 	virtual void BrushEnd(const Point source, const Point target) = 0;
-	virtual void Autodraw() = 0;
 
 	// according to the source image and the position, determine the draw color
 	void SetColor(const Point source);

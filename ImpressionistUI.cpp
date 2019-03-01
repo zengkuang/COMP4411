@@ -367,13 +367,7 @@ void ImpressionistUI::cb_randSpacing(Fl_Widget* o, void* v)
 {
 	ImpressionistUI* pUI = ((ImpressionistUI*)(o->user_data()));
 
-	if (pUI->m_nRandSpacing == TRUE)
-	{
-		pUI->m_nRandSpacing = FALSE;
-	}
-	else {
-		pUI->m_nRandSpacing = TRUE;
-	}
+	pUI->m_nRandSpacing = bool(((Fl_Light_Button *)o)->value());
 }
 
 void ImpressionistUI::cb_autoPaint(Fl_Widget* o, void* v)
@@ -381,7 +375,7 @@ void ImpressionistUI::cb_autoPaint(Fl_Widget* o, void* v)
 	ImpressionistUI* pUI = ((ImpressionistUI*)(o->user_data()));
 	ImpressionistDoc* pDoc = pUI->getDocument();
 
-	pDoc->m_pCurrentBrush->Autodraw();
+	pUI->m_paintView->Autodraw();
 }
 
 //---------------------------------- per instance functions --------------------------------------
@@ -669,7 +663,7 @@ ImpressionistUI::ImpressionistUI() {
 	m_nGreenScale = 255;
 	m_nBlueScale = 255;
 	m_nSpacing = 4;
-	m_nRandSpacing = TRUE;
+	m_nRandSpacing = false;
 
 	// brush dialog definition
 	m_brushDialog = new Fl_Window(400, 325, "Brush Dialog");
@@ -751,7 +745,7 @@ ImpressionistUI::ImpressionistUI() {
 	m_SpacingSlider->type(FL_HOR_NICE_SLIDER);
 	m_SpacingSlider->labelfont(FL_COURIER);
 	m_SpacingSlider->labelsize(12);
-	m_SpacingSlider->minimum(0);
+	m_SpacingSlider->minimum(1);
 	m_SpacingSlider->maximum(16);
 	m_SpacingSlider->step(1);
 	m_SpacingSlider->value(m_nSpacing);

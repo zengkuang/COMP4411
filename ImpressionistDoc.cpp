@@ -7,6 +7,8 @@
 
 #include <FL/fl_ask.H>
 #include <math.h>
+#include <ctime>
+#include <cstdlib>
 #include "impressionistDoc.h"
 #include "impressionistUI.h"
 
@@ -303,4 +305,43 @@ int ImpressionistDoc::rightMouseAngle() {
 		result += 360;
 	}
 	return result;
+}
+
+void ImpressionistDoc::AutoDraw(ImpBrush* current_brush, int spacing, bool Rand)
+{
+	if (!Rand)
+	{
+		for (int i = 0; i < m_nWidth; i += spacing)
+		{
+			for (int j = 0; j < m_nHeight; j += spacing)
+			{
+				Point p(i, j);
+				if (i == 0 && j == 0)
+					current_brush->BrushBegin(p, p);
+				else
+					current_brush->BrushMove(p, p);
+			}
+		}
+		Point p(m_nWidth, m_nHeight);
+		current_brush->BrushEnd(p, p);
+	}
+	else
+	{
+		srand((unsigned)time(NULL));
+		for (int i = 0; i < m_nWidth; i += spacing)
+		{
+			for (int j = 0; j < m_nHeight; j += spacing)
+			{
+				int size = rand() % 20 + 1;
+				Point p(i, j);
+				if (i == 0 && j == 0)
+					current_brush->BrushBegin(p, p);
+				else
+					glPointSize(float(size));
+					current_brush->BrushMove(p, p);
+			}
+		}
+		Point p(m_nWidth, m_nHeight);
+		current_brush->BrushEnd(p, p);
+	}
 }

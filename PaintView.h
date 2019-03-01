@@ -30,6 +30,8 @@ public:
 
 	void RestoreContent();
 
+	void Autodraw();
+
 	ImpressionistDoc *m_pDoc;
 
 private:

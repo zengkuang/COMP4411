@@ -44,6 +44,8 @@ public:
 	int 	rightMouseAngle();
 	int 	rightMouseLineSize();
 
+	void AutoDraw(ImpBrush* current_brush, int spacing, bool rand);
+
 											// Attributes
 public:
 	// Dimensions of original window.

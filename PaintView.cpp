@@ -17,6 +17,7 @@
 #define RIGHT_MOUSE_DOWN	4
 #define RIGHT_MOUSE_DRAG	5
 #define RIGHT_MOUSE_UP		6
+#define	AUTO_DRAW			7
 
 
 #ifndef WIN32
@@ -144,6 +145,10 @@ void PaintView::draw()
 			}
 			RestoreContent();
 			break;
+		case AUTO_DRAW:
+			m_pDoc->AutoDraw(m_pDoc->m_pCurrentBrush, m_pDoc->getSpacing(), m_pDoc->getRandSpacing());
+			SaveCurrentContent();
+			RestoreContent();
 			break;
 
 		default:
@@ -296,4 +301,11 @@ void PaintView::RestoreContent()
 				  m_pPaintBitstart);
 
 //	glDrawBuffer(GL_FRONT);
+}
+
+void PaintView::Autodraw()
+{
+	isAnEvent = 1;
+	eventToDo = AUTO_DRAW;
+	redraw();
 }

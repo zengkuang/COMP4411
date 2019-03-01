@@ -61,9 +61,9 @@ void ImpBrush::SetColor(const Point source)
 	{
 		int leftup_x = source.x - 1;
 		int leftup_y = source.y - 1;
-		int filteredRed = 0;
-		int filteredGreen = 0;
-		int filteredBlue = 0;
+		float filteredRed = 0.0;
+		float filteredGreen = 0.0;
+		float filteredBlue = 0.0;
 		
 		for (int i = 0; i < 3; i++)
 		{

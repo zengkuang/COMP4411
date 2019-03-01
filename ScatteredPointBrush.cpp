@@ -54,8 +54,3 @@ void ScatteredPointBrush::BrushEnd(const Point source, const Point target)
 {
 	// do nothing so far
 }
-
-void ScatteredPointBrush::Autodraw()
-{
-	
-}
